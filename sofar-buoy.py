@@ -63,16 +63,20 @@ print("params['startDate']", params["startDate"])
 api_url = "https://api.sofarocean.com/api/wave-data"
 response = requests.get(url=api_url, headers=headers, params=params)
 
-lines = response.json()["data"]["waves"]
+lines = np.array(response.json()["data"]["waves"])
+
+# get unique times
+bigx = [x['timestamp'] for x in lines]
+_, index = np.unique(bigx, return_index=True)
 
 dsnew = xr.Dataset()
 dsnew["time"] = xr.DataArray(
-    pd.DatetimeIndex([x["timestamp"] for x in lines]), dims="time"
+    pd.DatetimeIndex([x["timestamp"] for x in lines[index]]), dims="time"
 )
 dsnew["time"] = pd.DatetimeIndex(dsnew["time"].values)
 for k in lines[0].keys():
     if k != "timestamp":
-        dsnew[k] = xr.DataArray([x[k] for x in lines], dims="time")
+        dsnew[k] = xr.DataArray([x[k] for x in lines[index]], dims="time")
 
 ds = xr.merge([dsold, dsnew])
 
