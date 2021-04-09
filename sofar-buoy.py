@@ -66,7 +66,7 @@ response = requests.get(url=api_url, headers=headers, params=params)
 lines = np.array(response.json()["data"]["waves"])
 
 # get unique times
-bigx = [x['timestamp'] for x in lines]
+bigx = [x["timestamp"] for x in lines]
 _, index = np.unique(bigx, return_index=True)
 
 dsnew = xr.Dataset()
