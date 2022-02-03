@@ -25,7 +25,7 @@ else:
 if len(sys.argv) == 2:
     apikey = "sofar.apikey"
 else:
-    site = sys.argv[2]
+    apikey = sys.argv[2]
 
 print(site)
 
