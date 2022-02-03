@@ -24,9 +24,9 @@ else:
 
 print(site)
 
-deviceid = {"bel": "SPOT-0713"}
-timestart = {"bel": "2020-11-25T00:00:00"}
-title = {"bel": "Bellingham Bay Spotter Buoy"}
+deviceid = {"bel": "SPOT-0713", "guam": "SPOT-1291"}
+timestart = {"bel": "2020-11-25T00:00:00", "guam": "2022-01-21T00:00:00"}
+title = {"bel": "Bellingham Bay Spotter Buoy", "guam": "Guam Smart Mooring"}
 
 headers = {}
 with open("sofar.apikey") as f:
@@ -78,7 +78,72 @@ for k in lines[0].keys():
     if k != "timestamp":
         dsnew[k] = xr.DataArray([x[k] for x in lines[index]], dims="time")
 
+
+def smartmooring():
+    smart_url = "https://api.sofarocean.com/api/sensor-data"
+    smart_response = requests.get(url=smart_url, headers=headers, params=params)
+    lines = smart_response.json()["data"]
+
+    mptime = []
+    mpval = []
+    mttime = []
+    mtval = []
+    mttime1 = []
+    mtval1 = []
+    for line in lines:
+        if (
+            line["data_type_name"] == "rbrcoda3_meanpressure_21bits"
+            and line["sensorPosition"] == 2
+        ):
+            mptime.append(line["timestamp"])
+            mpval.append(line["value"])
+        if (
+            line["data_type_name"] == "rbrcoda3_meantemperature_20bits"
+            and line["sensorPosition"] == 2
+        ):
+            mttime.append(line["timestamp"])
+            mtval.append(line["value"])
+        if (
+            line["data_type_name"] == "rbrcoda3_meantemperature_20bits"
+            and line["sensorPosition"] == 1
+        ):
+            mttime1.append(line["timestamp"])
+            mtval1.append(line["value"])
+    meanpres = xr.Dataset()
+    meanpres["time"] = xr.DataArray([np.datetime64(x) for x in mptime], dims="time")
+    meanpres["rbrcoda3_meanpressure_21bits"] = xr.DataArray(
+        np.array(mpval) * 0.00001, dims="time"
+    )
+    meanpres["rbrcoda3_meanpressure_21bits"].attrs["units"] = "dbar"
+
+    meantemp = xr.Dataset()
+    meantemp["time"] = xr.DataArray([np.datetime64(x) for x in mttime], dims="time")
+    meantemp["rbrcoda3_meantemperature_20bits_lower"] = xr.DataArray(
+        np.array(mtval), dims="time"
+    )
+    meantemp["rbrcoda3_meantemperature_20bits_lower"].attrs["units"] = "degree_C"
+
+    meantemp1 = xr.Dataset()
+    meantemp1["time"] = xr.DataArray([np.datetime64(x) for x in mttime1], dims="time")
+    meantemp1["rbrcoda3_meantemperature_20bits_upper"] = xr.DataArray(
+        np.array(mtval1), dims="time"
+    )
+    meantemp1["rbrcoda3_meantemperature_20bits_upper"].attrs["units"] = "degree_C"
+
+    return xr.merge([meantemp, meanpres, meantemp1])
+
+
+sm = smartmooring()
+
+dsnew["time"] = dsnew.time.dt.round("1min")
+sm["time"] = sm["time"].dt.round("1min")
+
+dsnew = xr.merge([dsnew, sm.reindex_like(dsnew)])
+
 ds = xr.merge([dsold, dsnew])
+
+# hacky fix for some bad times that make erddap fail. Ends up droppping two samples with xx:xx:30 timestamps
+ds = ds.where(ds.time.dt.second != 30, drop=True)
 
 for k in ds.data_vars:
     if "time" in ds[k].dims:
