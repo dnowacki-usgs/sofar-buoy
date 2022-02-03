@@ -22,6 +22,11 @@ if len(sys.argv) == 1:
 else:
     site = sys.argv[1]
 
+if len(sys.argv) == 2:
+    apikey = "sofar.apikey"
+else:
+    site = sys.argv[2]
+
 print(site)
 
 deviceid = {"bel": "SPOT-0713", "guam": "SPOT-1291"}
@@ -29,7 +34,7 @@ timestart = {"bel": "2020-11-25T00:00:00", "guam": "2022-01-21T00:00:00"}
 title = {"bel": "Bellingham Bay Spotter Buoy", "guam": "Guam Smart Mooring"}
 
 headers = {}
-with open("sofar.apikey") as f:
+with open(apikey) as f:
     headers["token"] = f.read().strip()
 
 params = {
