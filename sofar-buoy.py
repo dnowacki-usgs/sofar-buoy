@@ -141,6 +141,7 @@ def smartmooring():
 sm = smartmooring()
 
 dsnew["time"] = dsnew.time.dt.round("1min")
+sm["time"] = pd.to_datetime(sm["time"])
 sm["time"] = sm["time"].dt.round("1min")
 
 dsnew = xr.merge([dsnew, sm.reindex_like(dsnew)])
