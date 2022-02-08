@@ -29,9 +29,17 @@ else:
 
 print(site)
 
-deviceid = {"bel": "SPOT-0713", "guam": "SPOT-1291"}
-timestart = {"bel": "2020-11-25T00:00:00", "guam": "2022-01-21T00:00:00"}
-title = {"bel": "Bellingham Bay Spotter Buoy", "guam": "Guam Smart Mooring"}
+deviceid = {"bel": "SPOT-0713", "guam": "SPOT-1291", "bel-orig": "SPOT-0206"}
+timestart = {
+    "bel": "2020-11-25T00:00:00",
+    "guam": "2022-01-21T00:00:00",
+    "bel-orig": "2020-02-01T00:00:00",
+}
+title = {
+    "bel": "Bellingham Bay Spotter Buoy",
+    "guam": "Guam Smart Mooring",
+    "bel-orig": "Bellingham Bay Spotter Buoy (original unit)",
+}
 
 headers = {}
 with open(apikey) as f:
