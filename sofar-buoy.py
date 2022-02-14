@@ -29,17 +29,25 @@ else:
 
 print(site)
 
-deviceid = {"bel": "SPOT-0713", "guam": "SPOT-1291", "bel-orig": "SPOT-0206"}
+deviceid = {
+    "bel": "SPOT-0713",
+    "guam": "SPOT-1291",
+    "bel-orig": "SPOT-0206",
+    "eden": "SPOT-1438",
+}
 timestart = {
     "bel": "2020-11-25T00:00:00",
     "guam": "2022-01-21T00:00:00",
     "bel-orig": "2020-02-01T00:00:00",
+    "eden": "2021-10-20T00:00:00",
 }
 title = {
     "bel": "Bellingham Bay Spotter Buoy",
     "guam": "Guam Smart Mooring",
     "bel-orig": "Bellingham Bay Spotter Buoy (original unit)",
+    "eden": "San Francisco Bay: EDEN",
 }
+is_smartmooring = {"bel": False, "guam": True, "bel-orig": False, "eden": False}
 
 headers = {}
 with open(apikey) as f:
@@ -146,13 +154,13 @@ def smartmooring():
     return xr.merge([meantemp, meanpres, meantemp1])
 
 
-sm = smartmooring()
-
 dsnew["time"] = dsnew.time.dt.round("1min")
-sm["time"] = pd.to_datetime(sm["time"])
-sm["time"] = sm["time"].dt.round("1min")
 
-dsnew = xr.merge([dsnew, sm.reindex_like(dsnew)])
+if is_smartmooring:
+    sm = smartmooring()
+    sm["time"] = pd.to_datetime(sm["time"])
+    sm["time"] = sm["time"].dt.round("1min")
+    dsnew = xr.merge([dsnew, sm.reindex_like(dsnew)])
 
 ds = xr.merge([dsold, dsnew])
 
