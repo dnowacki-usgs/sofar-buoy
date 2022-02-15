@@ -59,7 +59,16 @@ title = {
     "hunt": "San Francisco Bay: HUNT Spotter Buoy",
     "treas": "San Francisco Bay: TREAS Spotter Buoy",
 }
-is_smartmooring = {"bel": False, "guam": True, "bel-orig": False, "eden": False}
+is_smartmooring = {
+    "bel": False,
+    "guam": True,
+    "bel-orig": False,
+    "eden": False,
+    "rich": False,
+    "peta": False,
+    "hunt": False,
+    "treas": False,
+}
 
 headers = {}
 with open(apikey) as f:
@@ -168,7 +177,7 @@ def smartmooring():
 
 dsnew["time"] = dsnew.time.dt.round("1min")
 
-if is_smartmooring:
+if is_smartmooring[site]:
     sm = smartmooring()
     sm["time"] = pd.to_datetime(sm["time"])
     sm["time"] = sm["time"].dt.round("1min")
