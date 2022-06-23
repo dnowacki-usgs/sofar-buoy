@@ -31,43 +31,47 @@ print(site)
 
 deviceid = {
     "bel": "SPOT-0713",
-    "guam": "SPOT-1291",
+    "guam-orig": "SPOT-1291",
     "bel-orig": "SPOT-0206",
     "eden": "SPOT-1438",
     "rich": "SPOT-1440",
     "peta": "SPOT-1432",
     "hunt": "SPOT-1437",
     "treas": "SPOT-1439",
+    "guam": "SPOT-1743",
 }
 timestart = {
     "bel": "2020-11-25T00:00:00",
-    "guam": "2022-01-21T00:00:00",
+    "guam-orig": "2022-01-21T00:00:00",
     "bel-orig": "2020-02-01T00:00:00",
     "eden": "2021-10-20T00:00:00",
     "rich": "2021-10-20T00:00:00",
     "peta": "2021-10-20T00:00:00",
     "hunt": "2021-10-20T00:00:00",
     "treas": "2021-10-20T00:00:00",
+    "guam": "2022-06-23T00:00:00",
 }
 title = {
     "bel": "Bellingham Bay Spotter Buoy",
-    "guam": "Guam Smart Mooring",
+    "guam-orig": "Guam Smart Mooring (original unit)",
     "bel-orig": "Bellingham Bay Spotter Buoy (original unit)",
     "eden": "San Francisco Bay: EDEN Spotter Buoy",
     "rich": "San Francisco Bay: RICH Spotter Buoy",
     "peta": "San Francisco Bay: PETA Spotter Buoy",
     "hunt": "San Francisco Bay: HUNT Spotter Buoy",
     "treas": "San Francisco Bay: TREAS Spotter Buoy",
+    "guam": "Guam Spotter Buoy",
 }
 is_smartmooring = {
     "bel": False,
-    "guam": True,
+    "guam-orig": True,
     "bel-orig": False,
     "eden": False,
     "rich": False,
     "peta": False,
     "hunt": False,
     "treas": False,
+    "guam": False,
 }
 
 headers = {}
