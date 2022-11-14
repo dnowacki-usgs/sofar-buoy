@@ -84,7 +84,7 @@ params = {
     "startDate": timestart[site],
     "includeWaves": "true",
     "includeWindData": "false",
-    "includeSurfaceTempData": "false",
+    "includeSurfaceTempData": "true",
     "includeFrequencyData": "false",
     "includeDirectionalMoments": "false",
     "includePartitionData": "false",
@@ -123,6 +123,20 @@ dsnew["time"] = pd.DatetimeIndex(dsnew["time"].values)
 for k in lines[0].keys():
     if k != "timestamp":
         dsnew[k] = xr.DataArray([x[k] for x in lines[index]], dims="time")
+
+if "surfaceTemp" in response.json()["data"]:
+    linestemp = np.array(response.json()["data"]["surfaceTemp"])
+    bigxtemp = [x["timestamp"] for x in linestemp]
+    _, indextemp = np.unique(bigxtemp, return_index=True)
+    dstemp = xr.Dataset()
+    dstemp["time"] = xr.DataArray(
+        pd.DatetimeIndex([x["timestamp"] for x in linestemp[indextemp]]), dims="time"
+    )
+    dstemp["time"] = pd.DatetimeIndex(dstemp["time"].values)
+    dstemp["surfaceTemp"] = xr.DataArray(
+        [x["degrees"] for x in linestemp[indextemp]], dims="time"
+    )
+    dsnew = xr.merge([dsnew, dstemp])
 
 
 def smartmooring():
@@ -248,6 +262,10 @@ def add_standard_attrs(ds):
         "standard_name"
     ] = "sea_surface_wave_directional_spread"
     ds["meanDirectionalSpread"].attrs["units"] = "degree"
+
+    if "surfaceTemp" in ds:
+        ds["surfaceTemp"].attrs["standard_name"] = "sea_surface_temperature"
+        ds["surfaceTemp"].attrs["units"] = "degree_C"
 
     if "latitude" in ds:
         ds["latitude"].attrs["long_name"] = "latitude"
