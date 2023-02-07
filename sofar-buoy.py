@@ -35,6 +35,7 @@ deviceid = {
     "hunt": "SPOT-1437",
     "treas": "SPOT-1439",
     "guam": "SPOT-1743",
+    "wapa": "SPOT-30336R",
 }
 timestart = {
     "bel": "2020-11-25T00:00:00",
@@ -46,6 +47,7 @@ timestart = {
     "hunt": "2021-10-20T00:00:00",
     "treas": "2021-10-20T00:00:00",
     "guam": "2022-06-23T00:00:00",
+    "wapa": "2023-02-03T02:00:00",
 }
 title = {
     "bel": "Bellingham Bay Spotter Buoy",
@@ -57,6 +59,7 @@ title = {
     "hunt": "San Francisco Bay: HUNT Spotter Buoy",
     "treas": "San Francisco Bay: TREAS Spotter Buoy",
     "guam": "Guam Spotter Buoy",
+    "wapa": "Guam Spotter Buoy (WAPA)",
 }
 is_smartmooring = {
     "bel": False,
@@ -68,6 +71,7 @@ is_smartmooring = {
     "hunt": False,
     "treas": False,
     "guam": False,
+    "wapa": False,
 }
 
 headers = {}
