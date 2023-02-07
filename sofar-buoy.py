@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 
-import base64
 import datetime
-import json
-
-# import os
-import requests
 import shutil
+import sys
+
 import numpy as np
 import pandas as pd
+import requests
 import xarray as xr
-import sys
-import os
 
 # %%
 
