@@ -9,6 +9,15 @@ import pandas as pd
 import requests
 import xarray as xr
 
+"""
+Access the Sofar API and write data to CF-Compliant netCDF
+Daniel Nowacki
+U.S. Geological Survey
+Santa Cruz, CA
+
+dnowacki@usgs.gov
+"""
+
 # %%
 
 fildir = "/sand/usgs/users/dnowacki/waves/"
