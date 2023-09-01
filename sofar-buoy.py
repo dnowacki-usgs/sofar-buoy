@@ -45,6 +45,8 @@ deviceid = {
     "treas": "SPOT-1439",
     "guam": "SPOT-1743",
     "wapa": "SPOT-30336R",
+    "unk": "SPOT-31108C",
+    "nuvuk": "SPOT-1712",
 }
 timestart = {
     "bel": "2020-11-25T00:00:00",
@@ -57,6 +59,8 @@ timestart = {
     "treas": "2021-10-20T00:00:00",
     "guam": "2022-06-23T00:00:00",
     "wapa": "2023-02-03T02:00:00",
+    "unk": "2023-08-30T00:00:00",
+    "nuvuk": "2023-08-25T00:00:00",
 }
 title = {
     "bel": "Bellingham Bay Spotter Buoy",
@@ -69,6 +73,8 @@ title = {
     "treas": "San Francisco Bay: TREAS Spotter Buoy",
     "guam": "Guam Spotter Buoy",
     "wapa": "Guam Spotter Buoy (WAPA)",
+    "unk": "Unalakleet, AK Spotter Buoy",
+    "nuvuk": "Nuvuk (Point Barrow), Utqiagvik, AK Spotter Buoy",
 }
 is_smartmooring = {
     "bel": False,
@@ -81,6 +87,8 @@ is_smartmooring = {
     "treas": False,
     "guam": False,
     "wapa": False,
+    "unk": False,
+    "nuvuk": False,
 }
 
 headers = {}
