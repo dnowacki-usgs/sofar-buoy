@@ -105,6 +105,7 @@ params = {
     "includeFrequencyData": "false",
     "includeDirectionalMoments": "false",
     "includePartitionData": "false",
+    "includeBarometerData": "true",
 }
 
 try:
@@ -141,19 +142,28 @@ for k in lines[0].keys():
     if k != "timestamp":
         dsnew[k] = xr.DataArray([x[k] for x in lines[index]], dims="time")
 
-if "surfaceTemp" in response.json()["data"]:
-    linestemp = np.array(response.json()["data"]["surfaceTemp"])
-    bigxtemp = [x["timestamp"] for x in linestemp]
-    _, indextemp = np.unique(bigxtemp, return_index=True)
-    dstemp = xr.Dataset()
-    dstemp["time"] = xr.DataArray(
-        pd.DatetimeIndex([x["timestamp"] for x in linestemp[indextemp]]), dims="time"
-    )
-    dstemp["time"] = pd.DatetimeIndex(dstemp["time"].values)
-    dstemp["surfaceTemp"] = xr.DataArray(
-        [x["degrees"] for x in linestemp[indextemp]], dims="time"
-    )
-    dsnew = xr.merge([dsnew, dstemp])
+for k in ["surfaceTemp", "barometerData"]:
+    if k in response.json()["data"] and len(response.json()["data"][k]):
+        linestemp = np.array(response.json()["data"][k])
+        bigxtemp = [x["timestamp"] for x in linestemp]
+        _, indextemp = np.unique(bigxtemp, return_index=True)
+        dstemp = xr.Dataset()
+        dstemp["time"] = xr.DataArray(
+            pd.DatetimeIndex([x["timestamp"] for x in linestemp[indextemp]]),
+            dims="time",
+        )
+        dstemp["time"] = pd.DatetimeIndex(dstemp["time"].values)
+
+        if k == "surfaceTemp":
+            dstemp["surfaceTemp"] = xr.DataArray(
+                [x["degrees"] for x in linestemp[indextemp]], dims="time"
+            )
+        elif k == "barometerData":
+            dstemp["barometerData"] = xr.DataArray(
+                [x["value"] for x in linestemp[indextemp]], dims="time"
+            )
+
+        dsnew = xr.merge([dsnew, dstemp])
 
 
 def smartmooring():
@@ -283,6 +293,10 @@ def add_standard_attrs(ds):
     if "surfaceTemp" in ds:
         ds["surfaceTemp"].attrs["standard_name"] = "sea_surface_temperature"
         ds["surfaceTemp"].attrs["units"] = "degree_C"
+
+    if "barometerData" in ds:
+        ds["barometerData"].attrs["standard_name"] = "air_pressure"
+        ds["barometerData"].attrs["units"] = "hPa"
 
     if "latitude" in ds:
         ds["latitude"].attrs["long_name"] = "latitude"
