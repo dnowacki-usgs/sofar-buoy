@@ -47,6 +47,7 @@ deviceid = {
     "wapa": "SPOT-30336R",
     "unk": "SPOT-31108C",
     "nuvuk": "SPOT-1712",
+    "glv": "SPOT-31405C",
 }
 timestart = {
     "bel": "2020-11-25T00:00:00",
@@ -61,6 +62,7 @@ timestart = {
     "wapa": "2023-02-03T02:00:00",
     "unk": "2023-08-30T00:00:00",
     "nuvuk": "2023-08-25T00:00:00",
+    "glv": "2024-09-11T00:00:00",
 }
 title = {
     "bel": "Bellingham Bay Spotter Buoy",
@@ -75,6 +77,7 @@ title = {
     "wapa": "Guam Spotter Buoy (WAPA)",
     "unk": "Unalakleet, AK Spotter Buoy",
     "nuvuk": "Nuvuk (Point Barrow), Utqiagvik, AK Spotter Buoy",
+    "glv": "Golovin, AK Spotter Buoy",
 }
 is_smartmooring = {
     "bel": False,
@@ -89,6 +92,7 @@ is_smartmooring = {
     "wapa": False,
     "unk": False,
     "nuvuk": False,
+    "glv": False,
 }
 
 headers = {}
