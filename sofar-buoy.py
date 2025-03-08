@@ -48,6 +48,7 @@ deviceid = {
     "unk": "SPOT-31108C",
     "nuvuk": "SPOT-1712",
     "glv": "SPOT-31405C",
+    "tafb": "SPOT-31194C",
 }
 timestart = {
     "bel": "2020-11-25T00:00:00",
@@ -63,6 +64,7 @@ timestart = {
     "unk": "2023-08-30T00:00:00",
     "nuvuk": "2023-08-25T00:00:00",
     "glv": "2024-09-11T00:00:00",
+    "tafb": "2025-01-12T00:00:00",
 }
 title = {
     "bel": "Bellingham Bay Spotter Buoy",
@@ -78,6 +80,7 @@ title = {
     "unk": "Unalakleet, AK Spotter Buoy",
     "nuvuk": "Nuvuk (Point Barrow), Utqiagvik, AK Spotter Buoy",
     "glv": "Golovin, AK Spotter Buoy",
+    "tafb": "Tyndall Air Force Base, FL Spotter Buoy",
 }
 is_smartmooring = {
     "bel": False,
@@ -93,6 +96,7 @@ is_smartmooring = {
     "unk": False,
     "nuvuk": False,
     "glv": False,
+    "tafb": False,
 }
 
 headers = {}
