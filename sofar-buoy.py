@@ -225,7 +225,9 @@ def smartmooring():
     )
     meantemp1["rbrcoda3_meantemperature_20bits_upper"].attrs["units"] = "degree_C"
 
-    return xr.merge([meantemp, meanpres, meantemp1])
+    tomerge = [x for x in [meantemp, meanpres, meantemp1] if len(x['time'])]
+
+    return xr.merge(tomerge)
 
 
 dsnew["time"] = dsnew.time.dt.round("1min")
